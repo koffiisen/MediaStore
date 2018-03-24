@@ -1,22 +1,14 @@
-var exec = require('cordova/exec');
+var KMediaStore = {
 
+    getAudioList: function (successCallback, errorCallback) {
 
-function MediaStore() {
-}
+        cordova.exec(successCallback, errorCallback, "MediaStore", "getList", null);
 
-MediaStore.Audio = function (content) {
-
-    var onSuccess = function (response) {
-        alert(response);
-        return response;
-    };
-    var onFail = function () {
-        alert("Fail to get list");
-    };
-    exec(onSuccess, onFail, 'MediaStore', 'getList', [content]);
+    }
 };
 
-module.exports = MediaStore;
+
+module.exports = KMediaStore;
 
 /*var exec = require('cordova/exec');
 
