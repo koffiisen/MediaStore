@@ -19,8 +19,6 @@
                      target-dir="src/android/dev/koffi/mediastore"/>
         <source-file src="src/android/dev/koffi/mediastore/JsonCoverter.java"
                      target-dir="src/android/dev/koffi/mediastore"/>
-        <source-file src="src/android/dev/koffi/mediastore/BaseAsyncTaskLoader.java"
-                     target-dir="src/android/dev/koffi/mediastore"/>
         <source-file src="src/android/dev/koffi/mediastore/MusicItem.java"
                      target-dir="src/android/dev/koffi/mediastore"/>
         <source-file src="src/android/dev/koffi/mediastore/MusicLoader.java"
