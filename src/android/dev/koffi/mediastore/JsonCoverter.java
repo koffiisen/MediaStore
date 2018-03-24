@@ -33,6 +33,7 @@ public class JsonCoverter {
                 myJsonObject.put("album", this.kModelList.get(i).album());
                 myJsonObject.put("artist", this.kModelList.get(i).artist());
                 myJsonObject.put("duration", this.kModelList.get(i).duration());
+                myJsonObject.put("coverArtPath", this.kModelList.get(i).coverArtPath());
                 myJsonObject.put("albumArtUri", this.kModelList.get(i).albumArtUri());
                 myJsonObject.put("fileUri", this.kModelList.get(i).fileUri());
 
