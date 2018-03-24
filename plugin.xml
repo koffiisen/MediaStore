@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="koffi.cordova.MediaStore" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>MediaStore</name>
+
+    <js-module name="MediaStore" src="www/MediaStore.js">
+        <clobbers target="cordova.plugins.MediaStore"/>
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MediaStore">
+                <param name="android-package" value="dev.koffi.mediastore.MediaStore"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/dev/koffi/mediastore/MediaStore.java"
+                     target-dir="src/android/dev/koffi/mediastore"/>
+        <source-file src="src/android/dev/koffi/mediastore/JsonCoverter.java"
+                     target-dir="src/android/dev/koffi/mediastore"/>
+        <source-file src="src/android/dev/koffi/mediastore/BaseAsyncTaskLoader.java"
+                     target-dir="src/android/dev/koffi/mediastore"/>
+        <source-file src="src/android/dev/koffi/mediastore/MusicItem.java"
+                     target-dir="src/android/dev/koffi/mediastore"/>
+        <source-file src="src/android/dev/koffi/mediastore/MusicLoader.java"
+                     target-dir="src/android/dev/koffi/mediastore"/>
+    </platform>
+
+</plugin>

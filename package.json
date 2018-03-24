@@ -1,0 +1,14 @@
+{
+  "name": "koffi.cordova.MediaStore",
+  "version": "0.0.1",
+  "description": "Show all Audio information from android",
+  "cordova": {
+    "id": "koffi.cordova.MediaStore",
+    "platforms": []
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Koffi",
+  "license": "ISC"
+}
