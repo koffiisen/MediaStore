@@ -4,8 +4,10 @@ function MediaStore() {
 }
 
 MediaStore.Audio = function (content) {
+
     var onSuccess = function (response) {
         alert(response);
+        return response;
     };
     var onFail = function () {
         alert("Fail to get list");
