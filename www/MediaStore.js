@@ -21,3 +21,4 @@ exports.Audio = function (arg0, success, error) {
 // cordova plugin add --link C:\Users\Koffi\Documents\Dev\Cordova\plugin\MediaStore
 // plugman createpackagejson C:\Users\Koffi\Documents\Dev\Cordova\plugin\MediaStore
 // plugman create --name MediaStore --plugin_id koffi.cordova.MediaStore --plugin_version 0.0.1 --path .
+//

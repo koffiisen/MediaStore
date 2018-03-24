@@ -15,6 +15,9 @@ import org.json.JSONException;
 
 import java.util.List;
 
+/**
+ * Koffi
+ */
 
 public class MediaStore extends CordovaPlugin {
 
