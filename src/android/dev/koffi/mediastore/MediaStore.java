@@ -2,10 +2,13 @@ package dev.koffi.mediastore;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,24 +22,39 @@ public class MediaStore extends CordovaPlugin {
     private JsonCoverter jsonCoverter;
     private Context context;
 
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("getList")) {
-            //final String content = args.getString(0);
+    @Override
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        Log.i(this.toString(), action);
+        if ("getList".equals(action)) {
 
-            context = this.cordova.getActivity().getApplicationContext();
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
 
-            PluginResult result = new PluginResult(PluginResult.Status.OK, getList());
-            result.setKeepCallback(true);
-            callbackContext.sendPluginResult(result);
+                    context = cordova.getActivity().getApplicationContext();
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, getList());
+                    result.setKeepCallback(true);
+                    callbackContext.sendPluginResult(result);
 
-            Toast.makeText(context, "Permission denied to read your External storage", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Permission denied to read your External storage",
+                            Toast.LENGTH_LONG).show();
+                    callbackContext.success();
 
-            callbackContext.success();
+                }
+            });
+
             return true;
         } else {
+            Toast.makeText(context, "AlertPlugin." + action + " not found !",
+                    Toast.LENGTH_LONG).show();
+            Log.i(this.toString(), "AlertPlugin." + action + " not found !");
             callbackContext.error("AlertPlugin." + action + " not found !");
             return false;
         }
+    }
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
     }
 
     private String getList() {
