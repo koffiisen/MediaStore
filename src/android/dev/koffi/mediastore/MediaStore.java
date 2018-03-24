@@ -1,14 +1,7 @@
 package dev.koffi.mediastore;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.LoaderManager;
+
 import android.content.Context;
-import android.content.Loader;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import org.apache.cordova.CallbackContext;
@@ -16,9 +9,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -36,10 +27,12 @@ public class MediaStore extends CordovaPlugin {
             //final String content = args.getString(0);
 
             context = this.cordova.getActivity().getApplicationContext();
+
             PluginResult result = new PluginResult(PluginResult.Status.OK, getList());
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
-            Toast.makeText(context, getList(), Toast.LENGTH_LONG).show();
+
+            Toast.makeText(context, "Permission denied to read your External storage", Toast.LENGTH_LONG).show();
 
             callbackContext.success();
             return true;
@@ -49,13 +42,6 @@ public class MediaStore extends CordovaPlugin {
         }
     }
 
-
-    private void requestDialog() {
-        ActivityCompat.requestPermissions((Activity) context,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                1);
-    }
-
     private String getList() {
         musicLoader = new MusicLoader(context);
         List<MusicItem> musicItems = (List<MusicItem>) musicLoader.loadInBackground();
@@ -63,6 +49,5 @@ public class MediaStore extends CordovaPlugin {
 
         return jsonCoverter.getJson();
     }
-
 
 }
