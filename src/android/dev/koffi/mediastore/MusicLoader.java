@@ -61,8 +61,8 @@ class MusicLoader {
                             .artist(cursor.getString(artist))
                             .duration(cursor.getLong(duration))
                             .albumArtUri(ContentUris.withAppendedId(albumArtUri, cursor.getLong(albumId)))
-                            .fileUri(Uri.parse(cursor.getString(data)))
-                            ;
+                            .fileUri(Uri.parse(cursor.getString(data)));
+                    item.albumArtUri(Uri.parse(getRealPathFromUri(context, item.albumArtUri())));
                     items.add(item);
                 } while (cursor.moveToNext());
             }
@@ -70,5 +70,20 @@ class MusicLoader {
             cursor.close();
         }
         return items;
+    }
+
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 }
