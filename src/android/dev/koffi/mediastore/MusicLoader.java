@@ -70,16 +70,6 @@ class MusicLoader {
                             .albumArtUri(ContentUris.withAppendedId(albumArtUri, cursor.getLong(albumId)))
                             .fileUri(Uri.parse(cursor.getString(data)));
 
-                    Uri uriget = item.albumArtUri();
-                    if (uriget != null) {
-                        try {
-                            item.coverArtPath(getFilePath(context, uriget));
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-
                     items.add(item);
                 } while (cursor.moveToNext());
             }
