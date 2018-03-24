@@ -1,5 +1,6 @@
 var exec = require('cordova/exec');
 
+
 function MediaStore() {
 }
 
@@ -14,6 +15,7 @@ MediaStore.Audio = function (content) {
     };
     exec(onSuccess, onFail, 'MediaStore', 'getList', [content]);
 };
+
 module.exports = MediaStore;
 
 /*var exec = require('cordova/exec');
