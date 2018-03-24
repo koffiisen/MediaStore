@@ -1,6 +1,6 @@
 var KMediaStore = {
 
-    getAudioList: function (successCallback, errorCallback) {
+    Audio: function (successCallback, errorCallback) {
 
         cordova.exec(successCallback, errorCallback, "MediaStore", "getList", null);
 
