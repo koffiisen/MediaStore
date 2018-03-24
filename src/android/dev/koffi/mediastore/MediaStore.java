@@ -39,6 +39,7 @@ public class MediaStore extends CordovaPlugin {
             PluginResult result = new PluginResult(PluginResult.Status.OK, getList());
             result.setKeepCallback(true);
             callbackContext.sendPluginResult(result);
+            Toast.makeText(context, getList(), Toast.LENGTH_LONG).show();
 
             callbackContext.success();
             return true;
