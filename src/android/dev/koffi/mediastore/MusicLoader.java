@@ -14,13 +14,9 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Base64;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -91,10 +87,6 @@ class MusicLoader {
                             String filePath = saveBitmap(context, getBitmapFromUri(context, imgUri),
                                     item.title().replaceAll("\\W", "")).getPath();
                             item.coverArtPath(filePath);
-
-                            String base64Image = getImageEncodedData(filePath);
-
-                            item.base64(base64Image);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -198,20 +190,4 @@ class MusicLoader {
         return imageFile;
     }
 
-    public String getImageEncodedData(String path) {
-        File f = new File(path);
-        Bitmap imageBitmap = null;
-        try {
-            imageBitmap = BitmapFactory.decodeStream(new FileInputStream(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //added for testing base 64
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String mImageEncodedString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//       Log.e("TAG", "imageEncodedString: " + mImageEncodedString);
-        return mImageEncodedString;
-    }
 }

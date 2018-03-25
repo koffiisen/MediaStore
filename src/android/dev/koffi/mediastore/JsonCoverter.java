@@ -36,7 +36,6 @@ public class JsonCoverter {
                 myJsonObject.put("albumArtUri", this.kModelList.get(i).albumArtUri());
                 myJsonObject.put("fileUri", this.kModelList.get(i).fileUri());
                 myJsonObject.put("coverArtPath", this.kModelList.get(i).coverArtPath());
-                myJsonObject.put("base64Img", this.kModelList.get(i).base64());
 
             } catch (JSONException e) {
                 e.printStackTrace();

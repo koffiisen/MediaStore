@@ -15,7 +15,7 @@ class MusicItem implements Parcelable {
     private Uri albumArtUri;
     private Uri fileUri;
     private String coverArtPath;
-    private String base64;
+
 
 
     public MusicItem title(String title) {
@@ -53,11 +53,6 @@ class MusicItem implements Parcelable {
         return this;
     }
 
-    public MusicItem base64(String base64) {
-        this.base64 = base64;
-        return this;
-    }
-
 
 
 
@@ -89,11 +84,6 @@ class MusicItem implements Parcelable {
         return coverArtPath;
     }
 
-    public String base64() {
-        return base64;
-    }
-
-
 
 
     @Override
@@ -106,7 +96,6 @@ class MusicItem implements Parcelable {
         if (duration != item.duration) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
         if (album != null ? !album.equals(item.album) : item.album != null) return false;
-        if (base64 != null ? !base64.equals(item.base64) : item.base64 != null) return false;
         if (coverArtPath != null ? !coverArtPath.equals(item.coverArtPath) : item.coverArtPath != null) return false;
         if (artist != null ? !artist.equals(item.artist) : item.artist != null) return false;
         if (albumArtUri != null ? !albumArtUri.equals(item.albumArtUri) : item.albumArtUri != null)
@@ -124,7 +113,6 @@ class MusicItem implements Parcelable {
         result = 31 * result + (albumArtUri != null ? albumArtUri.hashCode() : 0);
         result = 31 * result + (fileUri != null ? fileUri.hashCode() : 0);
         result = 31 * result + (coverArtPath != null ? coverArtPath.hashCode() : 0);
-        result = 31 * result + (base64 != null ? base64.hashCode() : 0);
         return result;
     }
 
@@ -135,7 +123,6 @@ class MusicItem implements Parcelable {
                 ", album='" + album + '\'' +
                 ", artist='" + artist + '\'' +
                 ", coverArtPath='" + coverArtPath + '\'' +
-                ", base64='" + base64 + '\'' +
                 ", duration=" + duration +
                 ", albumArtUri=" + albumArtUri +
                 ", fileUri=" + fileUri +
@@ -157,7 +144,6 @@ class MusicItem implements Parcelable {
         dest.writeParcelable(this.albumArtUri, 0);
         dest.writeParcelable(this.fileUri, 0);
         dest.writeString(this.coverArtPath);
-        dest.writeString(this.base64);
     }
 
     public MusicItem() {
@@ -171,7 +157,6 @@ class MusicItem implements Parcelable {
         this.albumArtUri = in.readParcelable(Uri.class.getClassLoader());
         this.fileUri = in.readParcelable(Uri.class.getClassLoader());
         this.coverArtPath = in.readString();
-        this.base64 = in.readString();
     }
 
     public static final Creator<MusicItem> CREATOR = new Creator<MusicItem>() {

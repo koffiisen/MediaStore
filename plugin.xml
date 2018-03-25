@@ -18,9 +18,6 @@
         </config-file>
 
 
-        <custom-preference name="android-manifest/application/@android:hardwareAccelerated" value="false" />
-        <custom-preference name="android-manifest/application/@android:largeHeap" value="true" />
-
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MediaStore">
                 <param name="android-package" value="dev.koffi.mediastore.MediaStore"/>
