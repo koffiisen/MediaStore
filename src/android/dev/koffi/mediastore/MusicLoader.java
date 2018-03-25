@@ -6,12 +6,24 @@ import android.content.Context;
 
 import android.database.Cursor;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,6 +73,9 @@ class MusicLoader {
                 int duration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
                 int albumId = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
                 int data = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+                int date = cursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED);
+                int year = cursor.getColumnIndex(MediaStore.Audio.Media.YEAR);
+
                 do {
                     MusicItem item = new MusicItem()
                             .title(cursor.getString(title))
@@ -70,6 +85,23 @@ class MusicLoader {
                             .albumArtUri(ContentUris.withAppendedId(albumArtUri, cursor.getLong(albumId)))
                             .fileUri(Uri.parse(cursor.getString(data)));
 
+                    Uri imgUri = item.albumArtUri();
+                    if (imgUri != null) {
+                        try {
+                            String filePath = saveBitmap(context, getBitmapFromUri(context, imgUri),
+                                    item.title().replaceAll("\\W", "")).getPath();
+                            item.coverArtPath(filePath);
+
+                            String base64Image = getImageEncodedData(filePath);
+
+                            item.base64(base64Image);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        item.coverArtPath("No");
+                    }
                     items.add(item);
                 } while (cursor.moveToNext());
             }
@@ -142,4 +174,44 @@ class MusicLoader {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
+    private Bitmap getBitmapFromUri(Context context, Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                context.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
+
+    private File saveBitmap(Context context, Bitmap bitmap, String name) {
+        File filesDir = context.getFilesDir();
+        File imageFile = new File(filesDir, name + ".jpg");
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            //Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+        }
+        return imageFile;
+    }
+
+    public String getImageEncodedData(String path) {
+        File f = new File(path);
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = BitmapFactory.decodeStream(new FileInputStream(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //added for testing base 64
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String mImageEncodedString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//       Log.e("TAG", "imageEncodedString: " + mImageEncodedString);
+        return mImageEncodedString;
+    }
 }

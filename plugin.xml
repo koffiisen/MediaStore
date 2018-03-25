@@ -14,7 +14,12 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
+
+
+        <custom-preference name="android-manifest/application/@android:hardwareAccelerated" value="false" />
+        <custom-preference name="android-manifest/application/@android:largeHeap" value="true" />
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MediaStore">

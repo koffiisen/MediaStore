@@ -38,8 +38,7 @@ public class MediaStore extends CordovaPlugin {
                     result.setKeepCallback(true);
                     callbackContext.sendPluginResult(result);
 
-                    Toast.makeText(context, "Permission denied to read your External storage",
-                            Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "", Toast.LENGTH_LONG).show();
                     callbackContext.success();
 
                 }
